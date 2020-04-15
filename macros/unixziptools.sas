@@ -14,9 +14,9 @@ Github repository: https://github.com/ShenzhenYAO/sasmacros.
 %UnixZip(
 	sPath=, 
 	source=, 
-	data=PHRS_INFO_OccuER, 
+	data=_INFO_, 
 	tPath=&remoteTargetPath, 
-	target=PHRS_INFO_OccuER.zip, 
+	target=_INFO_.zip, 
 	debug=);
 
 */
@@ -112,13 +112,13 @@ Github repository: https://github.com/ShenzhenYAO/sasmacros.
 		command2 =trim(
 		"zip -j -X " ||trim(symget('tPath')) || trim(symget('target')) || " " || trim(symget('sPath')) || trim(symget('source'))
 			);
-		command = 'zip -j -X /SAS_data/dw0/HQC_share/Shenzhen/Projects/EC_NeuroAdh/Source/pt_newdrugs.zip /SAS_data/dw0/HQC_share/Shenzhen/Projects/EC_NeuroAdh/Source/pt_newdrugs.sas7bdat';
+		command = 'zip -j -X /SAS/Shenzhen/Projects/p1/pt_newdrugs.zip /SAS/Shenzhen/Projects/p1/Source/pt_newdrugs.sas7bdat';
 		call system(command2);
 	run;
 %exit:
 %mend UnixZip;
 /****************************************************************************************/
-/*the following macro helps exract files from a zip file on SASApp (unix)
+/*the following macro helps exract files from a zip file on SAS server (unix)
 !!! IN UNIX, EVERYTHING IS CASE SENSATIVE
 by default, the sPath/tPath is the location of the work directory
 by default, the zip file's extention is zip
@@ -132,10 +132,10 @@ if the zipped file is not specified, the extracted file, even is a single file,
 
 example:
 %UnixUnZip(
-	sPath=/SAS_data/dw0/HQC_share/Shenzhen/Projects/EC_NeuroAdh/Source/,
+	sPath=/SAS/Shenzhen/Projects/p1/Source,
 	zip=try,
 	zipped=try,
-	tPath=/SAS_data/dw0/HQC_share/Shenzhen/Projects/EC_NeuroAdh/Source,
+	tPath=/SAS/Shenzhen/Projects/p1/Source/,
 	target=try1
 );
 */
@@ -241,8 +241,8 @@ example:
 		step1 =	"unzip '" ||trim(symget('sPath')) || trim(symget('zip')) || "' " 
     	|| trim(symget('zipped')) || " -d '" ||trim(symget('tPath')) || "'";
 
-		step1a = 'unzip /SAS_data/dw0/HQC_share/Shenzhen/Projects/EC_NeuroAdh/Source/try.zip try.sas7bdat -d /SAS_data/dw0/HQC_share/Shenzhen/Projects/EC_NeuroAdh/Source/';
-		step2a = 'mv /SAS_data/dw0/HQC_share/Shenzhen/Projects/EC_NeuroAdh/Source/try.sas7bdat /SAS_data/dw0/HQC_share/Shenzhen/Projects/EC_NeuroAdh/Source/try1.sas7bdat';
+		step1a = 'unzip /SAS/Shenzhen/Projects/p1/Source/try.zip try.sas7bdat -d /SAS/Shenzhen/Projects/p1/Source/';
+		step2a = 'mv /SAS/Shenzhen/Projects/p1/Source/try.sas7bdat /SAS/Shenzhen/Projects/p1/Source/try1.sas7bdat';
 		call system(step1);
 		/*Only excute the step2 (rename) if the zipped and the target are different*/
 		%if &zipped ne &target and %length(&zipped) ne 0 %then %do;
